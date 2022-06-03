@@ -15,6 +15,8 @@ class Follower extends Model
         'accepted'
     ];
 
+    public $timestamps = false;
+
     public function user()
     {
         return $this->belongsTo('App\Models\User');

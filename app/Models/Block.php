@@ -19,6 +19,8 @@ class Block extends Model
         'blocker_id',
     ];
 
+    public $timestamps = false;
+
     public function user()
     {
         return $this->belongsTo('App\Models\User', 'user_id', 'user_id');

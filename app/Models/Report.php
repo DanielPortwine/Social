@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Report extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'reportable_id',
         'reportable_type',
