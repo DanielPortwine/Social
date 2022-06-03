@@ -41,4 +41,49 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function bans()
+    {
+        return $this->hasMany('App\Models\Ban');
+    }
+
+    public function issued_bans()
+    {
+        return $this->hasMany('App\Models\Ban', 'banner_id', 'id');
+    }
+
+    public function blocks()
+    {
+        return $this->belongsToMany('App\Models\User', 'blocks', 'user_id', 'user_id');
+    }
+
+    public function blocked_by()
+    {
+        return $this->belongsToMany('App\Models\User', 'blocks', 'user_id', 'blocker_id');
+    }
+
+    public function followers()
+    {
+        return $this->belongsToMany('App\Models\User', 'followers', 'user_id', 'follower_id');
+    }
+
+    public function following()
+    {
+        return $this->belongsToMany('App\Models\User', 'followers', 'follower_id', 'user_id');
+    }
+
+    public function posts()
+    {
+        return $this->hasMany('App\Model\Post');
+    }
+
+    public function reactions()
+    {
+        return $this->hasMany('App\Models\Reaction');
+    }
+
+    public function reports()
+    {
+        return $this->hasMany('App\Models\Report');
+    }
 }
