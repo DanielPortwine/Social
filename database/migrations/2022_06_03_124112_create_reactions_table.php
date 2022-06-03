@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('reactions', function (Blueprint $table) {
             $table->unsignedBigInteger('post_id');
             $table->unsignedBigInteger('user_id');
-            $table->integer('reaction');
+            $table->string('reaction');
             $table->timestamps();
 
             $table->foreign('post_id')->references('id')->on('posts')->cascadeOnDelete();

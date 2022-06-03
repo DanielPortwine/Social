@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('banner_id');
             $table->string('reason');
-            $table->integer('duration');
+            $table->string('duration');
             $table->dateTime('end');
             $table->timestamps();
         });
