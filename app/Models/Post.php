@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\Reportable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Post extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Reportable;
 
     /**
      * The attributes that are mass assignable.
@@ -27,5 +28,10 @@ class Post extends Model
     public function comments()
     {
         return $this->hasMany('App\Models\Post', 'id', 'parent_id');
+    }
+
+    public function reactions()
+    {
+        return $this->hasMany('App\Models\Reaction');
     }
 }

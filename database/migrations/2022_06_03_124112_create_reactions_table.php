@@ -14,6 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('reactions', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('post_id');
             $table->unsignedBigInteger('user_id');
             $table->string('reaction');

@@ -54,7 +54,7 @@ class User extends Authenticatable
 
     public function blocks()
     {
-        return $this->belongsToMany('App\Models\User', 'blocks', 'user_id', 'user_id');
+        return $this->belongsToMany('App\Models\User', 'blocks', 'blocker_id', 'user_id');
     }
 
     public function blocked_by()

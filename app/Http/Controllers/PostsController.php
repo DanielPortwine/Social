@@ -20,27 +20,30 @@ class PostsController extends Controller
 
     public function store(Request $request)
     {
-        $post = Post::create($request->all());
+        $post = new Post;
+        $post->user_id = Auth::id();
+        $post->parent_id = $request->post('parent_id');
+        $post->content = $request->post('content');
+        $post->save();
 
         return response()->json($post, 201);
     }
 
     public function update(Post $post, Request $request)
     {
-        if(Auth::id() !== $post->user_id) {
+        if (Auth::id() !== $post->user_id) {
             return response()->json(null, 404);
         }
 
-        $post->update($request->all());
+        $post->content = $request->post('content');
+        $post->save();
 
         return response()->json($post);
     }
 
-    public function delete($id)
+    public function delete(Post $post)
     {
-        $post = Post::findOrFail($id);
-
-        if(Auth::id() !== $post->user_id) {
+        if (Auth::id() !== $post->user_id) {
             return response()->json(null, 404);
         }
 
