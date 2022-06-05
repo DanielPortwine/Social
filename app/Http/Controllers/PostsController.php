@@ -10,7 +10,15 @@ class PostsController extends Controller
 {
     public function index(Request $request)
     {
-        return Post::limit(10)->offset(($request->get('page') -1) * 10)->get();
+        $following = Auth::user()->following()->pluck('id')->toArray();
+
+        return Post::with(['user', 'reactions', 'reports'])
+            ->whereIn('user_id', $following)
+            ->orWhere('user_id', Auth::id())
+            ->limit(10)
+            ->offset(($request->get('page') -1) * 10)
+            ->orderByDesc('created_at')
+            ->get();
     }
 
     public function view(Post $post)
