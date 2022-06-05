@@ -3,6 +3,7 @@
 use App\Http\Controllers\BansController;
 use App\Http\Controllers\BlocksController;
 use App\Http\Controllers\FollowersController;
+use App\Http\Controllers\PopularUsersController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\ReactionsController;
 use App\Http\Controllers\ReportsController;
@@ -22,6 +23,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::middleware('auth:sanctum')->prefix('popular')->group(function() {
+    Route::get('/users', [PopularUsersController::class, 'index']);
 });
 
 Route::middleware('auth:sanctum')->prefix('posts')->group(function() {
