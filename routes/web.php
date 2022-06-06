@@ -33,3 +33,15 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
 });
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/post/{id}', function ($id) {
+        return Inertia::render('Post', [
+            'post_id' => $id,
+        ]);
+    })->name('post_view');
+});

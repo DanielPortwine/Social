@@ -12,17 +12,29 @@ class PostsController extends Controller
     {
         $following = Auth::user()->following()->pluck('id')->toArray();
 
-        return Post::with(['user', 'reactions', 'reports'])
-            ->whereIn('user_id', $following)
-            ->orWhere('user_id', Auth::id())
+        return Post::withCount('comments')
+            ->with(['user', 'reactions', 'reports'])
+            ->where(function($q) use ($following) {
+                $q->whereIn('user_id', $following)
+                    ->orWhere('user_id', Auth::id());
+            })
+            ->whereNull('parent_id')
             ->limit(10)
             ->offset(($request->get('page') -1) * 10)
             ->orderByDesc('created_at')
             ->get();
     }
 
-    public function view(Post $post)
+    public function view(Post $post, Request $request)
     {
+        $post->loadCount('comments')->load(['user', 'reactions', 'reports', 'comments' => function($q) use ($request) {
+            $q->withCount('comments')
+                ->with(['user', 'reactions', 'reports', 'comments'])
+                ->limit(10)
+                ->offset(($request->get('page') -1) * 10)
+                ->orderByDesc('created_at');
+        }]);
+
         return $post;
     }
 
@@ -34,7 +46,9 @@ class PostsController extends Controller
         $post->content = $request->post('content');
         $post->save();
 
-        $post = Post::with(['user', 'reactions', 'reports'])->where('id', $post->id)->first();
+        $post->load(['user', 'reactions', 'reports']);
+
+//        $post = Post::with(['user', 'reactions', 'reports'])->where('id', $post->id)->first();
 
         return response()->json($post, 201);
     }

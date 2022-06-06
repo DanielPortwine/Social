@@ -1368,6 +1368,12 @@ select {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.whitespace-pre {
+  white-space: pre;
+}
+.whitespace-pre-wrap {
+  white-space: pre-wrap;
+}
 .break-all {
   word-break: break-all;
 }
