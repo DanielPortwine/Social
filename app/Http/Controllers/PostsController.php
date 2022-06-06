@@ -34,6 +34,8 @@ class PostsController extends Controller
         $post->content = $request->post('content');
         $post->save();
 
+        $post = Post::with(['user', 'reactions', 'reports'])->where('id', $post->id)->first();
+
         return response()->json($post, 201);
     }
 
