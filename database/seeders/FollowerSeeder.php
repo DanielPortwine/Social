@@ -17,7 +17,7 @@ class FollowerSeeder extends Seeder
     public function run()
     {
         foreach(User::get() as $user) {
-            foreach(User::where('id', '!=', $user->id)->inRandomOrder()->limit(20)->get() as $follower) {
+            foreach(User::where('id', '!=', $user->id)->inRandomOrder()->limit(rand(0, 45))->get() as $follower) {
                 Follower::factory()->create([
                     'user_id' => $user->id,
                     'follower_id' => $follower->id,

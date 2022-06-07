@@ -19,6 +19,10 @@ class FollowersController extends Controller
 
     public function store(Request $request)
     {
+        if (!empty(Auth::user()->following()->where('user_id', $request->post('user_id'))->first())) {
+            return response()->json('Already following', 201);
+        }
+
         $follower = new Follower;
         $follower->user_id = $request->post('user_id');
         $follower->follower_id = Auth::id();

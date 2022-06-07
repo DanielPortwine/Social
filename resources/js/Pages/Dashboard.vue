@@ -1,7 +1,7 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Post from '@/Components/Post.vue';
-import User from '@/Components/User.vue';
+import PopularUsers from '@/Components/PopularUsers.vue';
 import SecondaryButton from "../Jetstream/SecondaryButton";
 </script>
 
@@ -26,11 +26,7 @@ import SecondaryButton from "../Jetstream/SecondaryButton";
                     </div>
                 </div>
                 <div class="hidden md:block md:col-span-2">
-                    <div class="py-4 sm:px-6 lg:px-8 bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                        <h1 class="text-2xl mb-2">Popular Users</h1>
-                        <User v-for="user in popularUsers" :user=user />
-                        <a id="popular-users-more" class="cursor-pointer text-blue-500">Show more</a>
-                    </div>
+                    <PopularUsers />
                 </div>
             </div>
         </div>
@@ -65,22 +61,6 @@ export default {
                 });
             }
         },
-        getPopularUsers() {
-            axios.get('/api/popular/users').then((response) => {
-                this.popularUsers = response.data;
-            });
-        },
-        getNextPopularUsers() {
-            axios.get('/api/popular/users?page=' + ++this.popularUsersPage).then((response) => {
-                response.data.forEach((user) => {
-                    this.popularUsers.push(user);
-                })
-            });
-
-            if (this.popularUsersPage >= 5) {
-                document.getElementById('popular-users-more').remove();
-            }
-        },
         createPost() {
             let textarea = document.getElementById('post-textarea'),
                 content = textarea.value;
@@ -101,14 +81,10 @@ export default {
         window.onscroll = () => {
             this.getNextPosts();
         };
-        this.getPopularUsers();
     },
     mounted() {
         document.getElementById('refresh-posts-button').onclick = () => {
             this.getInitialPosts();
-        };
-        document.getElementById('popular-users-more').onclick = () => {
-            this.getNextPopularUsers();
         };
         document.getElementById('post-textarea').onfocus = () => {
             document.getElementById('post-textarea').rows = "5";
