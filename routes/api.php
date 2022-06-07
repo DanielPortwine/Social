@@ -31,10 +31,11 @@ Route::middleware('auth:sanctum')->prefix('popular')->group(function() {
 
 Route::middleware('auth:sanctum')->prefix('posts')->group(function() {
     Route::get('/', [PostsController::class, 'index']);
-    Route::get('/{post}', [PostsController::class, 'view']);
+    Route::get('/{post}', [PostsController::class, 'view'])->withTrashed();
     Route::post('/store', [PostsController::class, 'store']);
     Route::put('/{post}', [PostsController::class, 'update']);
     Route::delete('/{post}', [PostsController::class, 'delete']);
+    Route::post('/{post}', [PostsController::class, 'restore'])->withTrashed();
 });
 
 Route::middleware('auth:sanctum')->prefix('bans')->group(function() {

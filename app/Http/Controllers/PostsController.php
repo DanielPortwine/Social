@@ -73,6 +73,17 @@ class PostsController extends Controller
 
         $post->delete();
 
-        return response()->json(null, 204);
+        return response()->json($post, 204);
+    }
+
+    public function restore(Post $post)
+    {
+        if (Auth::id() !== $post->user_id) {
+            return response()->json(null, 404);
+        }
+
+        $post->restore();
+
+        return response()->json($post, 204);
     }
 }

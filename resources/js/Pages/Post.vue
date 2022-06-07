@@ -13,7 +13,10 @@ defineProps({
         <div class="max-w-7xl py-2 sm:py-6 mx-auto">
             <div class="grid grid-cols-6 md:mx-4">
                 <div class="col-span-6 md:col-span-4 md:mr-4">
-                    <Post v-if="post" :post=post :key="post.id" />
+                    <div v-if="post && post.deleted_at" class="py-4 sm:px-6 lg:px-8 sm:mb-4 bg-red-500 overflow-hidden shadow-xl sm:rounded-lg">
+                        <i class="fa-solid fa-circle-info"></i> This post is deleted
+                    </div>
+                    <Post v-if="post" v-on:delete-post="deletePost" v-on:restore-post="restorePost" :post=post :deletable="true" :key="post.id" />
                     <div class="p-2">
                         <secondary-button id="refresh-comments-button" class="bg-blue-500 text-white hover:text-gray-300">Refresh</secondary-button>
                     </div>
@@ -60,6 +63,11 @@ export default {
                 setTimeout(this.getNextComments, 1);
             });
         },
+        refreshPost() {
+            axios.get('/api/posts/' + this.post_id).then((response) => {
+                this.post = response.data;
+            });
+        },
         getNextComments() {
             let shouldScroll = document.documentElement.scrollTop + window.innerHeight + 500 >= document.documentElement.offsetHeight &&
                                 this.comments.length < this.post.comments_count;
@@ -102,6 +110,16 @@ export default {
                     textarea.rows = "1";
                 });
             }
+        },
+        deletePost(id) {
+            axios.delete('/api/posts/' + id).then((response) => {
+                this.refreshPost();
+            })
+        },
+        restorePost(id) {
+            axios.post('/api/posts/' + id).then((response) => {
+                this.refreshPost();
+            })
         }
     },
     beforeMount() {
