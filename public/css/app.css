@@ -1129,8 +1129,14 @@ select {
 .mr-4 {
   margin-right: 1rem;
 }
+.ml-16 {
+  margin-left: 4rem;
+}
 .block {
   display: block;
+}
+.inline-block {
+  display: inline-block;
 }
 .inline {
   display: inline;
@@ -1249,6 +1255,9 @@ select {
 .flex-1 {
   flex: 1 1 0%;
 }
+.flex-none {
+  flex: none;
+}
 .shrink-0 {
   flex-shrink: 0;
 }
@@ -1314,6 +1323,9 @@ select {
 }
 .flex-wrap {
   flex-wrap: wrap;
+}
+.items-start {
+  align-items: flex-start;
 }
 .items-center {
   align-items: center;
