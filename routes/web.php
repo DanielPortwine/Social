@@ -32,16 +32,16 @@ Route::middleware([
     Route::get('/', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
-});
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    Route::get('/post/{id}', function ($id) {
+    Route::get('/posts/{id}', function ($id) {
         return Inertia::render('Post', [
             'post_id' => $id,
         ]);
     })->name('post_view');
+
+    Route::get('/users/{id}', function ($id) {
+        return Inertia::render('User', [
+            'user_id' => $id,
+        ]);
+    })->name('user_view');
 });

@@ -47,8 +47,6 @@ export default {
             post: null,
             comments: [],
             commentsPage: 1,
-            popularUsers: [],
-            popularUsersPage: 1,
         };
     },
     methods: {

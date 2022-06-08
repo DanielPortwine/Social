@@ -15,7 +15,11 @@ defineProps({
                 </button>
                 <div class="flex-1">
                     <div class="flex">
-                        <h1 class="text-2xl flex-1">{{ post.user.name }}</h1>
+                        <div class="flex-1">
+                            <Link :href="route('user_view', post.user.id)">
+                                <h1 class="text-2xl">{{ post.user.name }}</h1>
+                            </Link>
+                        </div>
                         <div v-if="deletable && $page.props.user && $page.props.user.id === post.user.id">
                             <button v-if="!post.deleted_at" @click="deletePost(post.id)" v-on:click.prevent class="text-sm text-gray-400 hover:text-gray-500 cursor-pointer"><i class="fa-solid fa-trash"></i></button>
                             <button v-else @click="restorePost(post.id)" v-on:click.prevent class="text-sm text-gray-400 hover:text-gray-500 cursor-pointer"><i class="fa-solid fa-history"></i></button>

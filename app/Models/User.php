@@ -96,7 +96,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function posts()
     {
-        return $this->hasMany('App\Model\Post');
+        return $this->hasMany('App\Models\Post');
     }
 
     public function reactions()

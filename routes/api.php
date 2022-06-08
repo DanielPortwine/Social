@@ -7,6 +7,7 @@ use App\Http\Controllers\PopularUsersController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\ReactionsController;
 use App\Http\Controllers\ReportsController;
+use App\Http\Controllers\UsersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +24,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::middleware('auth:sanctum')->prefix('users')->group(function() {
+    Route::get('/{user}', [UsersController::class, 'view']);
 });
 
 Route::middleware('auth:sanctum')->prefix('popular')->group(function() {
