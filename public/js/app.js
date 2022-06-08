@@ -21682,7 +21682,6 @@ var __default__ = {
       var _this = this;
 
       axios.get('/api/popular/users').then(function (response) {
-        console.log(response.data);
         _this.popularUsers = response.data;
       });
     },
@@ -21791,43 +21790,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Jetstream_SecondaryButton__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Jetstream/SecondaryButton */ "./resources/js/Jetstream/SecondaryButton.vue");
 var __default__ = {
-  data: function data() {
-    return {
-      followerIDs: []
-    };
-  },
   methods: {
-    getFollowerIDs: function getFollowerIDs() {
-      var _this = this;
-
-      this.followerIDs = [];
-      this.user.followers.forEach(function (follower) {
-        _this.followerIDs.push(follower.id);
-      });
-    },
     follow: function follow() {
-      var _this2 = this;
+      var _this = this;
 
       axios.post('/api/followers/store', {
         user_id: this.user.id
       }).then(function (response) {
-        _this2.$emit('refresh-popular-users');
-
-        setTimeout(_this2.getFollowerIDs, 500);
+        _this.$emit('refresh-popular-users');
       });
     },
     unfollow: function unfollow() {
-      var _this3 = this;
+      var _this2 = this;
 
       axios["delete"]('/api/followers/' + this.user.id + '/' + this.$page.props.user.id).then(function (response) {
-        _this3.$emit('refresh-popular-users');
-
-        setTimeout(_this3.getFollowerIDs, 500);
+        _this2.$emit('refresh-popular-users');
       });
     }
-  },
-  beforeMount: function beforeMount() {
-    this.getFollowerIDs();
   }
 };
 
@@ -24875,16 +24854,13 @@ var _hoisted_7 = {
   "class": "text-sm text-gray-500"
 };
 var _hoisted_8 = {
-  "class": "text-sm"
-};
-var _hoisted_9 = {
   key: 1,
   "class": "flex-none"
 };
 
-var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Unfollow ");
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Unfollow ");
 
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Follow ");
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Follow ");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [$props.user.profile_photo_url ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
@@ -24897,16 +24873,16 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* TEXT */
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.user.followers_count) + " Followers", 1
   /* TEXT */
-  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.followerIDs.indexOf(_ctx.$page.props.user.id)), 1
-  /* TEXT */
-  )]), $props.user.id !== _ctx.$page.props.user.id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_9, [$data.followerIDs.indexOf(_ctx.$page.props.user.id) >= 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["SecondaryButton"], {
+  )]), $props.user.id !== _ctx.$page.props.user.id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_8, [$props.user.followers.map(function (value) {
+    return value.id;
+  }).indexOf(_ctx.$page.props.user.id) >= 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["SecondaryButton"], {
     key: 0,
     onClick: _cache[0] || (_cache[0] = function ($event) {
       return $options.unfollow($props.user.id);
     })
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_10];
+      return [_hoisted_9];
     }),
     _: 1
     /* STABLE */
@@ -24919,7 +24895,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "bg-blue-500 text-white hover:text-gray-300"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_11];
+      return [_hoisted_10];
     }),
     _: 1
     /* STABLE */

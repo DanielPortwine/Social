@@ -21,7 +21,6 @@ export default {
     methods: {
         getPopularUsers() {
             axios.get('/api/popular/users').then((response) => {
-                console.log(response.data);
                 this.popularUsers = response.data;
             });
         },
