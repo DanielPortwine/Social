@@ -14,6 +14,7 @@ class BlocksController extends Controller
         if ($request->get('blocked_by')) {
             return response()->json($user->blocked_by()->get());
         }
+
         return response()->json($user->blocks()->get());
     }
 

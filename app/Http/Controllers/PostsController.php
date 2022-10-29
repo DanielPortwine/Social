@@ -14,24 +14,24 @@ class PostsController extends Controller
 
         return Post::withCount('comments')
             ->with(['user', 'reactions', 'reports'])
-            ->where(function($q) use ($following) {
+            ->where(function ($q) use ($following) {
                 $q->whereIn('user_id', $following)
                     ->orWhere('user_id', Auth::id());
             })
             ->whereNull('parent_id')
             ->limit(10)
-            ->offset(($request->get('page') -1) * 10)
+            ->offset(($request->get('page') - 1) * 10)
             ->orderByDesc('created_at')
             ->get();
     }
 
     public function view(Post $post, Request $request)
     {
-        $post->loadCount('comments')->load(['user', 'reactions', 'reports', 'comments' => function($q) use ($request) {
+        $post->loadCount('comments')->load(['user', 'reactions', 'reports', 'comments' => function ($q) use ($request) {
             $q->withCount('comments')
                 ->with(['user', 'reactions', 'reports', 'comments'])
                 ->limit(10)
-                ->offset(($request->get('page') -1) * 10)
+                ->offset(($request->get('page') - 1) * 10)
                 ->orderByDesc('created_at');
         }]);
 
