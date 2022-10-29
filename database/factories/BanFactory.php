@@ -26,7 +26,7 @@ class BanFactory extends Factory
             'banner_id' => $banner->id,
             'reason' => $this->faker->sentence,
             'duration' => $duration['name'],
-            'end' => date('Y-m-d H:i:s', strtotime('+' . $duration['seconds'] . ' seconds')),
+            'end' => date('Y-m-d H:i:s', strtotime('+'.$duration['seconds'].' seconds')),
         ];
     }
 }

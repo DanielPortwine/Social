@@ -14,6 +14,7 @@ class BansController extends Controller
         if ($request->get('issued')) {
             return response()->json($user->issued_bans()->get());
         }
+
         return response()->json($user->bans()->get());
     }
 
@@ -24,7 +25,7 @@ class BansController extends Controller
         $ban->banner_id = Auth::id();
         $ban->reason = $request->post('reason');
         $ban->duration = $request->post('duration');
-        $ban->end = date('Y-m-d H:i:s', strtotime('+' . $request->post('duration')));
+        $ban->end = date('Y-m-d H:i:s', strtotime('+'.$request->post('duration')));
         $ban->save();
 
         return response()->json($ban, 201);
