@@ -14,12 +14,13 @@ class FollowersController extends Controller
         if ($request->get('following')) {
             return response()->json($user->following()->get());
         }
+
         return response()->json($user->followers()->get());
     }
 
     public function store(Request $request)
     {
-        if (!empty(Auth::user()->following()->where('user_id', $request->post('user_id'))->first())) {
+        if (! empty(Auth::user()->following()->where('user_id', $request->post('user_id'))->first())) {
             return response()->json('Already following', 201);
         }
 

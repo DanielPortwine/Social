@@ -13,7 +13,7 @@ class UsersController extends Controller
             $query->with(['user', 'reactions', 'reports', 'comments'])
                 ->whereNull('parent_id')
                 ->limit(10)
-                ->offset(($request->get('page') -1) * 10)
+                ->offset(($request->get('page') - 1) * 10)
                 ->orderByDesc('created_at');
         }, 'followers', 'following']);
 

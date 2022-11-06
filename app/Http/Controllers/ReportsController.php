@@ -9,14 +9,15 @@ class ReportsController extends Controller
 {
     public function view($type, $id)
     {
-        $type = 'App\Models\\' . ucfirst($type);
+        $type = 'App\Models\\'.ucfirst($type);
         $reportable = $type::findOrFail($id);
+
         return response()->json($reportable->reports()->get());
     }
 
     public function store(Request $request)
     {
-        $type = 'App\Models\\' . $request->post('reportable_type');
+        $type = 'App\Models\\'.$request->post('reportable_type');
         $reportable = $type::findOrFail($request->post('reportable_id'));
         $report = $reportable->report($request->post('reason'));
 
